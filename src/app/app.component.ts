@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { WebsocketService } from './websocket.service';
-import { CryptoQuote } from './cryptoquote.service';
+import { CryptoQuote, Quote } from './cryptoquote.service';
+
+/* Inject the CryptoQuote service and subscribe to its list of quotes. */
 
 @Component({
   selector: 'app-root',
@@ -8,13 +10,18 @@ import { CryptoQuote } from './cryptoquote.service';
   styleUrls: ['./app.component.css'],
   providers: [ WebsocketService, CryptoQuote ]
 })
+
 export class AppComponent {
 
-	constructor(private chatService: CryptoQuote) {
-		chatService.messages.subscribe(msg => {
+    public quotes: { [key: string] : Quote; } = {};
+    public objectKeys = Object.keys;
 
-      		console.log("Response from websocket: " + msg.symbol);
-
-		});
-	}
+    constructor(private cryptoQuote: CryptoQuote) {
+        cryptoQuote.quotes.subscribe(quote => {
+            if (quote.exchange) {
+                let key = quote.exchange.name + quote.symbol;
+                this.quotes[key] = quote;
+            }
+        });
+    }
 }

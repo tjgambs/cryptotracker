@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
 
+/* Meant to interface with our websockets and will act as a type of adapter 
+which will adapt the output from our websocket into a form that we can easily 
+work with in the frontend. */
+
 const CRYPTO_URL = 'wss://feed.cryptoquote.io/v1/firehose/f4a7f5f0-4011-11e8-8b4d-a9b47e52a224';
 
 export interface Exchange {
@@ -9,7 +13,7 @@ export interface Exchange {
 	market: string
 }
 
-export interface Message {
+export interface Quote {
 	symbol: string,
 	updated: number,
 	exchange: Exchange,
@@ -28,12 +32,12 @@ export interface Message {
 
 @Injectable()
 export class CryptoQuote {
-	public messages: Subject<Message>;
+	public quotes: Subject<Quote>;
 
 	constructor(wsService: WebsocketService) {
-		this.messages = <Subject<Message>>wsService
+		this.quotes = <Subject<Quote>>wsService
 			.connect(CRYPTO_URL)
-			.map((response: MessageEvent): Message => {
+			.map((response: MessageEvent): Quote => {
 				let data = JSON.parse(response.data);
 				return data;
 			});

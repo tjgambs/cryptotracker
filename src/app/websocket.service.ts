@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
 
+/* We’ll need to import * from the rxjs library at the top of our new service. 
+This will allow us to create the subject that will both observe and be 
+observable. This essentially means our subject will watch our websocket for 
+any incoming messages and will broadcast these messages to any components 
+that happen to be subscribing to this service. */
+
 
 @Injectable()
 export class WebsocketService {
