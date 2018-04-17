@@ -13,13 +13,13 @@ import { CryptoQuote, Quote } from './cryptoquote.service';
 
 export class AppComponent {
 
-    public quotes: { [key: string] : Quote; } = {};
+    public quotes: { [key: string]: Quote; } = {};
     public objectKeys = Object.keys;
 
     constructor(private cryptoQuote: CryptoQuote) {
         cryptoQuote.quotes.subscribe(quote => {
             if (quote.exchange) {
-                let key = quote.exchange.name + quote.symbol;
+                const key = quote.exchange.name + quote.symbol;
                 this.quotes[key] = quote;
             }
         });
