@@ -6,7 +6,14 @@ import * as d3Shape from 'd3-shape';
 import * as d3Array from 'd3-array';
 import * as d3Axis from 'd3-axis';
 
-import { CryptoPrices } from './crypto-price-data';
+import { CryptoQuote } from '../cryptoquote.service';
+
+
+export interface CryptoPrice {
+  date: Date;
+  value: number;
+}
+
 
 @Component({
   selector: 'app-chart',
@@ -27,16 +34,31 @@ export class ChartComponent implements OnInit {
   svg: any;
   line: d3Shape.Line<[number, number]>;
 
-  constructor() {
+  CryptoPrices: CryptoPrice[] = [];
+
+  constructor(private cryptoQuote: CryptoQuote) {
     this.width = 900 - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
   }
 
+  updateQuotes() {
+    let _this = this;
+    this.cryptoQuote.getPastDayBars('btcusd', 'gdax', 1).subscribe(data => {
+      data.bars.bars.forEach( function (bar) {
+        _this.CryptoPrices.push({
+          date: new Date(bar.time),
+          value: +bar.open
+        });
+      });
+      _this.initSvg();
+      _this.initAxis();
+      _this.drawAxis();
+      _this.drawLine();
+    })
+  }
+
   ngOnInit() {
-    this.initSvg();
-    this.initAxis();
-    this.drawAxis();
-    this.drawLine();
+    this.updateQuotes();
   }
 
   initSvg() {
@@ -48,8 +70,8 @@ export class ChartComponent implements OnInit {
   initAxis() {
     this.x = d3Scale.scaleTime().range([0, this.width]);
     this.y = d3Scale.scaleLinear().range([this.height, 0]);
-    this.x.domain(d3Array.extent(CryptoPrices, (d) => d.date ));
-    this.y.domain(d3Array.extent(CryptoPrices, (d) => d.value ));
+    this.x.domain(d3Array.extent(this.CryptoPrices, (d) => d.date ));
+    this.y.domain(d3Array.extent(this.CryptoPrices, (d) => d.value ));
   }
 
   drawAxis() {
@@ -76,7 +98,7 @@ export class ChartComponent implements OnInit {
       .y( (d: any) => this.y(d.value) );
 
     this.svg.append('path')
-      .datum(CryptoPrices)
+      .datum(this.CryptoPrices)
       .attr('class', 'line')
       .attr('d', this.line);
   }
