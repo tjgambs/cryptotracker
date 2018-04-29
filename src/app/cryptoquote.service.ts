@@ -31,6 +31,27 @@ export interface Quote {
   updateType: string;
 }
 
+export interface BarResponse {
+  requestSymbol: string;
+  vendorSymbol: string;
+  bars: BarInnerResponse
+}
+
+export interface BarInnerResponse {
+  interval: number,
+  symbol: string,
+  bars: [Bar]
+}
+
+export interface Bar {
+  time: Date,
+  open: number,
+  high: number,
+  low: number,
+  close: number,
+  volume: number
+}
+
 @Injectable()
 export class CryptoQuote {
   public quotes: Subject<Quote>;
@@ -44,9 +65,11 @@ export class CryptoQuote {
 			});
 	}
 
-	public getPastDayBars(currency, exchange, interval) {
+	public getPastDayBars(currency, exchange, interval): Observable<Bar[]> {
 		// https://feed.cryptoquote.io/bars/minutes/1/btcusd.gdax.internal/now
 		let url = 'https://feed.cryptoquote.io/bars/minutes/'+interval+'/'+currency+'.'+exchange+'.internal/now';
-		return this.http.get(url);
+		return this.http.get<BarResponse>(url)
+      .switchMap(res => res.bars.bars)
+      .toArray();
 	}
 }

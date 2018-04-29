@@ -43,8 +43,8 @@ export class ChartComponent implements OnInit {
 
   updateQuotes() {
     let _this = this;
-    this.cryptoQuote.getPastDayBars('btcusd', 'gdax', 1).subscribe(data => {
-      data.bars.bars.forEach( function (bar) {
+    this.cryptoQuote.getPastDayBars('btcusd', 'gdax', 1).subscribe(bars => {
+      bars.forEach( function (bar) {
         _this.CryptoPrices.push({
           date: new Date(bar.time),
           value: +bar.open
