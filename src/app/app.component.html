@@ -1,4 +1,12 @@
-<div *ngFor="let key of objectKeys(quotes)">
-	{{key + ' : ' + quotes[key].ask}}
+<div class="wrapper">
+    <div class="sidebar" data-color="azure" data-image="">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar.jpg)"></div>
+    </div>
+
+    <div class="main-panel">
+        <navbar-cmp></navbar-cmp>
+        <router-outlet></router-outlet>
+        <footer-cmp></footer-cmp>
+    </div>
 </div>
-<app-chart></app-chart>

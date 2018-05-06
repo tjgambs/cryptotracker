@@ -1,27 +1,26 @@
-import { Component } from '@angular/core';
-import { WebsocketService } from './websocket.service';
-import { CryptoQuote, Quote } from './cryptoquote.service';
-
-/* Inject the CryptoQuote service and subscribe to its list of quotes. */
+import { Component, OnInit } from '@angular/core';
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [ WebsocketService, CryptoQuote ]
+  styleUrls: ['./app.component.css']
 })
+export class AppComponent implements OnInit {
 
-export class AppComponent {
+     constructor(public location: Location) {}
 
-    public quotes: { [key: string]: Quote; } = {};
-    public objectKeys = Object.keys;
+    ngOnInit(){
+    }
 
-    constructor(private cryptoQuote: CryptoQuote) {
-        cryptoQuote.quotes.subscribe(quote => {
-            if (quote.exchange) {
-                const key = quote.exchange.name + quote.symbol;
-                this.quotes[key] = quote;
-            }
-        });
+    isMap(path){
+      var titlee = this.location.prepareExternalUrl(this.location.path());
+      titlee = titlee.slice( 1 );
+      if(path == titlee){
+        return false;
+      }
+      else {
+        return true;
+      }
     }
 }

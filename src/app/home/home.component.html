@@ -1,0 +1,46 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-8">
+                <lbd-chart
+                  [title]="'BTCUSD'"
+                  [subtitle]="'24 Hours performance'"
+                  [chartType]="hoursChartType"
+                  [chartData]="hoursChartData"
+                  [chartOptions]="hoursChartOptions"
+                  [chartResponsive]="hoursChartResponsive"
+                  [legendItems]="hoursChartLegendItems"
+                  [withHr]="true"
+                  [footerIconClass]="'fa fa-history'"
+                  [footerText]="'Updated 3 minutes ago'">
+                </lbd-chart>
+            </div>
+            <div class="col-md-4">
+              <div class="card" style="max-height: 475px; overflow-y: auto;">
+                <div class="header">
+                  <h4 class="title">Crypto Prices</h4>
+                </div>
+                <div class="content">
+                  <div *ngFor="let key of objectKeys(quotes)">
+                    {{key + ' : ' + quotes[key].ask}}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Crypto Tracker</h4>
+                <p class="category">Fake CryptoPrice Prices By Day</p>
+              </div>
+              <app-chart></app-chart>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+</div>

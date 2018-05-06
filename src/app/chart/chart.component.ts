@@ -17,8 +17,7 @@ export interface CryptoPrice {
 
 @Component({
   selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css'],
+  templateUrl: './chart.component.html'
 })
 
 export class ChartComponent implements OnInit {
@@ -62,7 +61,7 @@ export class ChartComponent implements OnInit {
   }
 
   initSvg() {
-    this.svg = d3.select('svg')
+    this.svg = d3.select('.graph-content')
       .append('g')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
   }
