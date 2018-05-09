@@ -13,11 +13,11 @@ export enum ChartType {
 }
 
 @Component({
-  selector: 'lbd-chart',
-  templateUrl: './lbd-chart.component.html',
+  selector: 'graph',
+  templateUrl: './graph.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LbdChartComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit, AfterViewInit {
   static currentId = 1;
 
   @Input()
@@ -59,7 +59,7 @@ export class LbdChartComponent implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
-    this.chartId = `lbd-chart-${LbdChartComponent.currentId++}`;
+    this.chartId = `graph-${GraphComponent.currentId++}`;
   }
 
   public ngAfterViewInit(): void {

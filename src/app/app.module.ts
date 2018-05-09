@@ -9,10 +9,10 @@ import { AppRoutingModule } from './app.routing';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { SidebarModule } from './sidebar/sidebar.module';
-import { LbdModule } from './lbd/lbd.module';
 
 import { AppComponent } from './app.component';
 
+import { GraphComponent } from './graph/graph.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { ChartComponent } from './chart/chart.component';
@@ -23,7 +23,8 @@ import { ChartComponent } from './chart/chart.component';
     AppComponent,
     HomeComponent,
     UserComponent,
-    ChartComponent
+    ChartComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,6 @@ import { ChartComponent } from './chart/chart.component';
     SidebarModule,
     RouterModule,
     AppRoutingModule,
-    LbdModule,
     HttpClientModule
   ],
   providers: [],

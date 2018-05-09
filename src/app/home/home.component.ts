@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
-import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
+import { LegendItem, ChartType } from '../graph/graph.component';
 import * as Chartist from 'chartist';
 import { WebsocketService } from '../websocket.service';
 import { CryptoQuote, Quote } from '../cryptoquote.service';
