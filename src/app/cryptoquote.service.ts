@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
-import { HttpClient } from '@angular/common/http';
 
 /* Meant to interface with our websockets and will act as a type of adapter
 which will adapt the output from our websocket into a form that we can easily
@@ -31,45 +30,18 @@ export interface Quote {
   updateType: string;
 }
 
-export interface BarResponse {
-  requestSymbol: string;
-  vendorSymbol: string;
-  bars: BarInnerResponse
-}
-
-export interface BarInnerResponse {
-  interval: number,
-  symbol: string,
-  bars: [Bar]
-}
-
-export interface Bar {
-  time: Date,
-  open: number,
-  high: number,
-  low: number,
-  close: number,
-  volume: number
-}
-
 @Injectable()
 export class CryptoQuote {
-  public quotes: Subject<Quote>;
+    
+    public quotes: Subject<Quote>;
 
-	constructor(wsService: WebsocketService, private http: HttpClient) {
-		this.quotes = <Subject<Quote>>wsService
-			.connect(CRYPTO_URL)
-			.map((response: MessageEvent): Quote => {
-				let data = JSON.parse(response.data);
-				return data;
-			});
-	}
-
-	public getPastDayBars(currency, exchange, interval): Observable<Bar[]> {
-		// https://feed.cryptoquote.io/bars/minutes/1/btcusd.gdax.internal/now
-		let url = 'https://feed.cryptoquote.io/bars/minutes/'+interval+'/'+currency+'.'+exchange+'.internal/now';
-		return this.http.get<BarResponse>(url)
-      .switchMap(res => res.bars.bars)
-      .toArray();
-	}
+    constructor(wsService: WebsocketService) {
+        this.quotes = <Subject<Quote>>wsService
+            .connect(CRYPTO_URL)
+            .map((response: MessageEvent): Quote => {
+                let data = JSON.parse(response.data);
+                return data;
+            });
+    }
 }
+

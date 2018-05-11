@@ -1,14 +1,14 @@
-import { LbdFreeAngularcliPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('lbd-free-angularcli App', function() {
-  let page: LbdFreeAngularcliPage;
+describe('csc360-project App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new LbdFreeAngularcliPage();
+    page = new AppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });

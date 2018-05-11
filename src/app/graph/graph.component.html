@@ -1,20 +1,19 @@
 <div class="card">
   <div class="header">
     <h4 class="title">{{ title }}</h4>
-    <p class="category">{{ subtitle }}</p>
+    <p class="category">1 Hour performance</p>
   </div>
   <div class="content">
-    <div [attr.id]="chartId" class="ct-chart {{ chartClass }}"></div>
-
+    <div class="ct-chart"></div>
     <div class="footer">
       <div class="legend">
         <span *ngFor="let item of legendItems">
-          <i [ngClass]="item.imageClass"></i> {{ item.title }}
+          <i class="fa fa-circle {{ item }}"></i> {{ item }}
         </span>
       </div>
-      <hr *ngIf="withHr">
+      <hr>
       <div class="stats">
-        <i [ngClass]="footerIconClass"></i> {{ footerText }}
+        <a href="" onclick="return false;"><i (click)="updateAllCryptos()" class="fa fa-history"></i></a> Last Updated: {{ lastUpdated }}
       </div>
     </div>
   </div>

@@ -1,0 +1,9 @@
+<div class="card">
+  <div class="header">
+    <h4 class="title">{{ exchange }}</h4>
+    <p class="category">{{ currency }}</p>
+  </div>
+  <div class="content">
+    {{ quotes[exchange + currency] ? quotes[exchange + currency].bid : '' }}
+  </div>
+</div>
