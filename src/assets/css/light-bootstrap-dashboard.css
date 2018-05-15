@@ -2916,3 +2916,8 @@ input:focus {
     overflow-y: hidden;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch; } }
+
+.login-button-wrapper {
+  display: flex;
+  justify-content: center;
+}
