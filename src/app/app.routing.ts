@@ -6,9 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 
-const routes: Routes =[
+import { CallbackComponent } from './callback/callback.component';
+
+export const routes: Routes =[
     { path: 'dashboard', component: HomeComponent },
     { path: 'user', component: UserComponent },
+    { path: 'callback', component: CallbackComponent },
     { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 

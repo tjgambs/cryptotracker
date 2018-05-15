@@ -1,10 +1,25 @@
+
 <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-image="">
+
+    <p align="center" *ngIf="!auth.isAuthenticated()">Please log in
+        in order to view the CryptoTracker
+    </p>
+
+    <div>
+    	<button id="qsLoginBtn"
+          class="btn btn-primary"
+          *ngIf="!auth.isAuthenticated()"
+          (click)="auth.login()" type="button">
+            Log In
+    	</button>
+    </div>
+
+    <div *ngIf="auth.isAuthenticated()" class="sidebar" data-color="azure" data-image="">
         <app-sidebar></app-sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar.jpg)"></div>
     </div>
 
-    <div class="main-panel">
+    <div *ngIf="auth.isAuthenticated()" class="main-panel">
         <navbar-cmp></navbar-cmp>
         <router-outlet></router-outlet>
         <footer-cmp></footer-cmp>

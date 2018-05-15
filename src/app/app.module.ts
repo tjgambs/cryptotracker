@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app.routing';
+import { routes } from './app.routing';
 
 import { AppComponent } from './app.component';
 
@@ -18,6 +19,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TickerComponent } from './ticker/ticker.component';
 
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { TickerComponent } from './ticker/ticker.component';
     NavbarComponent,
     FooterComponent,
     SidebarComponent,
-    TickerComponent
+    TickerComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +40,10 @@ import { TickerComponent } from './ticker/ticker.component';
     HttpModule,
     RouterModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
