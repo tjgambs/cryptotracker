@@ -8,7 +8,7 @@ import { UserComponent } from './user/user.component';
 
 import { CallbackComponent } from './callback/callback.component';
 
-export const routes: Routes =[
+export const routes: Routes = [
     { path: 'dashboard', component: HomeComponent },
     { path: 'user', component: UserComponent },
     { path: 'callback', component: CallbackComponent },

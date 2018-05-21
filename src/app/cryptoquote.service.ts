@@ -32,14 +32,14 @@ export interface Quote {
 
 @Injectable()
 export class CryptoQuote {
-    
+
     public quotes: Subject<Quote>;
 
     constructor(wsService: WebsocketService) {
         this.quotes = <Subject<Quote>>wsService
             .connect(CRYPTO_URL)
             .map((response: MessageEvent): Quote => {
-                let data = JSON.parse(response.data);
+                const data = JSON.parse(response.data);
                 return data;
             });
     }

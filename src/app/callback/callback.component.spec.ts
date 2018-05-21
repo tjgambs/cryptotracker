@@ -25,4 +25,9 @@ describe('CallbackComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render the proper classes', () => {
+    const testResult = fixture.debugElement.query(By.css('.loading'));
+    expect(testResult).toBeTruthy();
+  });
 });

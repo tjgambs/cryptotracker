@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { CryptoQuote } from './cryptoquote.service';
+import {WebsocketService} from './websocket.service';
 
 describe('CryptoQuote', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [CryptoQuote]
+			providers: [CryptoQuote, WebsocketService]
 		});
 	});
 

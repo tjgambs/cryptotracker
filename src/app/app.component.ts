@@ -9,16 +9,15 @@ import { AuthService } from './auth/auth.service';
 
 export class AppComponent implements OnInit {
 
-    constructor(public location: Location, public auth: AuthService) 
-    {
-    	auth.handleAuthentication();
+    constructor(public location: Location, public auth: AuthService) {
+        auth.handleAuthentication();
     }
 
-    ngOnInit(){
+    ngOnInit() {
     }
 
-    isMap(path){
-        var titlee = this.location.prepareExternalUrl(this.location.path()).slice(1);
-        return path != titlee;
+    isMap(path) {
+        const title = this.location.prepareExternalUrl(this.location.path()).slice(1);
+        return path !== title;
     }
 }

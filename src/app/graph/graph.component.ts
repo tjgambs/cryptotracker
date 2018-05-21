@@ -4,28 +4,27 @@ import { Observable } from 'rxjs/Rx';
 
 import * as Chartist from 'chartist';
 import * as moment from 'moment';
-import { WebsocketService } from '../websocket.service';
 
 
 export interface BarResponse {
   requestSymbol: string;
   vendorSymbol: string;
-  bars: BarInnerResponse
+  bars: BarInnerResponse;
 }
 
 export interface BarInnerResponse {
-  interval: number,
-  symbol: string,
-  bars: [Bar]
+  interval: number;
+  symbol: string;
+  bars: [Bar];
 }
 
 export interface Bar {
-  time: Date,
-  open: number,
-  high: number,
-  low: number,
-  close: number,
-  volume: number
+  time: Date;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
 }
 
 

@@ -20,7 +20,5 @@ export class TickerComponent implements OnInit {
 
     }
 
-    ngOnInit() { 
-
-    }
+    ngOnInit() {}
 }

@@ -11,7 +11,7 @@ declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
     { path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '' },
-    { path: 'user', title: 'User Profile',  icon:'pe-7s-user', class: '' }
+    { path: 'user', title: 'User Profile',  icon: 'pe-7s-user', class: '' }
 ];
 
 @Component({
@@ -19,11 +19,9 @@ export const ROUTES: RouteInfo[] = [
     templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-  
     public menuItems: RouteInfo[];
 
-    constructor() { 
-    }
+    constructor() {}
 
     ngOnInit() {
         this.menuItems = ROUTES.filter(menuItem => menuItem);
