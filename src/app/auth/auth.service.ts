@@ -12,7 +12,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: `https://${AUTH_CONFIG.domain}/userinfo`,
     redirectUri: AUTH_CONFIG.callbackURL,
-    scope: 'openid profile'
+    scope: 'openid profile email last_login'
   });
 
   userProfile: any;

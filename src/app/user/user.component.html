@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Edit Profile</h4>
+                        <h4 class="title">General Information</h4>
                     </div>
                     <div class="content">
                         <form>
@@ -12,13 +12,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Username</label>
-                                        <input type="text" class="form-control" placeholder="Username" value="tjgambs">
+                                        <input type="text" class="form-control" placeholder="Username" value="{{profile?.nickname}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" value="{{profile.email}}">
+                                        <label>Email address</label>
+                                        <input type="text" class="form-control" value="{{profile?.email}}">
                                     </div>
                                 </div>
                             </div>
@@ -27,13 +27,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" placeholder="Company" value="Tim">
+                                        <input type="text" class="form-control" placeholder="Company" value="{{profile?.given_name}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control" placeholder="Last Name" value="Gamble">
+                                        <input type="text" class="form-control" placeholder="Last Name" value="{{profile?.family_name}}">
                                     </div>
                                 </div>
                             </div>
@@ -97,10 +97,10 @@
                     <div class="content">
                         <div class="author">
                             <a>
-                                <img class="avatar border-gray" src="assets/img/default-avatar.png" alt="..."/>
+                                <img class="avatar border-gray" src="{{profile?.picture}}" alt="assets/img/default-avatar.jpeg"/>
 
                                 <h4 class="title">{{profile?.name}}<br/>
-                                    <small>tjgambs</small>
+                                    <small>{{profile?.nickname}}</small>
                                 </h4>
                             </a>
                         </div>
