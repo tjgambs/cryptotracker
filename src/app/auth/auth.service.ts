@@ -12,8 +12,10 @@ export class AuthService {
     responseType: 'token id_token',
     audience: `https://${AUTH_CONFIG.domain}/userinfo`,
     redirectUri: AUTH_CONFIG.callbackURL,
-    scope: 'openid'
+    scope: 'openid profile email last_login'
   });
+
+  userProfile: any;
 
   constructor(public router: Router) {}
 
@@ -31,6 +33,21 @@ export class AuthService {
         console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
+    });
+  }
+
+  public getProfile(cb): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access token must exist to fetch profile');
+    }
+
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+      }
+      cb(err, profile);
     });
   }
 
