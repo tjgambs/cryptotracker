@@ -1,4 +1,5 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, 
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
@@ -37,6 +38,7 @@ export interface Bar {
 
 export class GraphComponent implements OnInit {
 
+    public lastUpdated: string = '';
     private series: any[] = [[],[],[],[],[]];
     private seriesVisible: boolean[] = [true, true, true, true, true, true];
     private status: number = 0;
@@ -46,16 +48,16 @@ export class GraphComponent implements OnInit {
     @Input()
     private selectedCurrency: string;
 
-    public lastUpdated: string = '';
-
     constructor(private cdRef:ChangeDetectorRef, private http:HttpClient) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        /* Whenever the user selects a new currency, this function is ran. */
         this.updateAllCryptos();
     }
 
     public ngOnInit(): void {
+        /* Initialize the Chartist line chart for time sereis data. */
         this.chart = new Chartist.Line('.ct-chart', {
             series: this.series
         }, {
@@ -74,11 +76,14 @@ export class GraphComponent implements OnInit {
         this.updateAllCryptos();
         let t = this;
         setInterval(function() {
+            /* Update the chart once every minute. */
             t.updateAllCryptos();
         }, 1000 * 60);
     }
 
     private toggle(name, index) {
+        /* Executed when the user chooses to either turn on or turn off
+         one of the currencies. */
         if (this.seriesVisible[index] == false) {
             this.addCrypto(this.selectedCurrency, name, index, false);
         } else {
@@ -95,10 +100,12 @@ export class GraphComponent implements OnInit {
     }
 
     private updateAllCryptos() {
+        this.status = 0;
         this.addCrypto(this.selectedCurrency, 'gdax', 0, true);
         this.addCrypto(this.selectedCurrency, 'bitfinex', 1, true);
         this.addCrypto(this.selectedCurrency, 'binance', 2, true);
         this.addCrypto(this.selectedCurrency, 'bitstamp', 3, true);
+        // Gemini doesn't support ltcusd currency, hence the condition.
         if (this.selectedCurrency != 'LTCUSD') {
             this.addCrypto(this.selectedCurrency, 'gemini', 4, true);
         } else {
@@ -116,10 +123,13 @@ export class GraphComponent implements OnInit {
             bars.forEach( function (bar) {
                 data.push({x: new Date(bar.time), y: +bar.open})
             });
+            /* Create the new data points for the specified exchange and currency. */
             t.series[index] = {
                 name: exchange,
                 data: data
             };
+            /* Flag just differentiates a call from the updateAllCryptos function 
+            and the toggle function. */
             if (flag) {
                 t.status = t.status + 1;
             } else {
@@ -128,6 +138,7 @@ export class GraphComponent implements OnInit {
                 });
             }
             if ((currency != 'LTCUSD' && t.status == 6) || (currency == 'LTCUSD' && t.status == 5)) {
+                /* Only update the chart once all of the currencies have been retrieved. */
                 t.chart.update({
                     series: t.series
                 });
