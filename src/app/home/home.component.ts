@@ -13,6 +13,9 @@ export class HomeComponent implements OnInit {
 
     public quotes: { [key: string]: Quote; } = {};
 
+    public selectedCurrency: string = 'BTCUSD';
+    public currencies: string[] = ['BTCUSD', 'LTCUSD', 'ETHUSD'];
+
     constructor(private cryptoQuote: CryptoQuote) {
 
     }

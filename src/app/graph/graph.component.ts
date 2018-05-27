@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
@@ -38,13 +38,20 @@ export interface Bar {
 export class GraphComponent implements OnInit {
 
     private series: any[] = [[],[],[],[],[]];
+    private status: number = 0;
     private legendItems: string[] = ['GDAX', 'Bitfinex', 'Binance','Bitstamp', 'Gemini', 'Poloniex'];
     private chart: Chartist.Line;
 
-    public title: string = 'BTCUSD';
+    @Input()
+    private selectedCurrency: string;
+
     public lastUpdated: string = '';
 
     constructor(private cdRef:ChangeDetectorRef, private http:HttpClient) {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.updateAllCryptos();
     }
 
     public ngOnInit(): void {
@@ -71,12 +78,16 @@ export class GraphComponent implements OnInit {
     }
 
     private updateAllCryptos() {
-        this.addCrypto('btcusd', 'gdax', 0);
-        this.addCrypto('btcusd', 'bitfinex', 1);
-        this.addCrypto('btcusd', 'binance', 2);
-        this.addCrypto('btcusd', 'bitstamp', 3);
-        this.addCrypto('btcusd', 'gemini', 4);
-        this.addCrypto('btcusd', 'poloniex', 5);
+        this.addCrypto(this.selectedCurrency, 'gdax', 0);
+        this.addCrypto(this.selectedCurrency, 'bitfinex', 1);
+        this.addCrypto(this.selectedCurrency, 'binance', 2);
+        this.addCrypto(this.selectedCurrency, 'bitstamp', 3);
+        if (this.selectedCurrency != 'LTCUSD') {
+            this.addCrypto(this.selectedCurrency, 'gemini', 4);
+        } else {
+            this.series[4] = {name: 'gemini', data: []};
+        }
+        this.addCrypto(this.selectedCurrency, 'poloniex', 5);
         this.lastUpdated = moment().format('h:mm:ss a');
         this.cdRef.detectChanges();
     }
@@ -92,9 +103,13 @@ export class GraphComponent implements OnInit {
                 name: exchange,
                 data: data
             };
-            t.chart.update({
-                series: t.series
-            });
+            t.status = t.status + 1;
+            if ((currency != 'LTCUSD' && t.status == 6) || (currency == 'LTCUSD' && t.status == 5)) {
+                t.chart.update({
+                    series: t.series
+                });
+                t.status = 0;
+            }
         })
     }
 
@@ -104,5 +119,6 @@ export class GraphComponent implements OnInit {
         return this.http.get<BarResponse>(url)
             .switchMap(res => res.bars.bars)
             .toArray();
+
     }
 }

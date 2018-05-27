@@ -1,29 +1,36 @@
 <div class="main-content">
     <div class="container-fluid">
+
+        <select [(ngModel)]="selectedCurrency" (ngModelChange)="changeCurrency()">
+          <option *ngFor="let c of currencies" [ngValue]="c"> {{c}} </option>
+        </select>
+      
         <div class="row">
             <div class="col-md-12">
-                <graph></graph>
+                <graph 
+                  [selectedCurrency]=selectedCurrency>
+                </graph>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
               <ticker
                   [exchange]="'GDAX'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
             <div class="col-md-4">
               <ticker
                   [exchange]="'Bitfinex'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
             <div class="col-md-4">
               <ticker
                   [exchange]="'Binance'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
@@ -32,21 +39,21 @@
             <div class="col-md-4">
               <ticker
                   [exchange]="'Bitstamp'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
             <div class="col-md-4">
               <ticker
                   [exchange]="'Gemini'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
             <div class="col-md-4">
               <ticker
                   [exchange]="'Poloniex'"
-                  [currency]="'BTCUSD'"
+                  [currency]="selectedCurrency"
                   [quotes]="quotes">
                 </ticker>
             </div> 
