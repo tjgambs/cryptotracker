@@ -1,19 +1,14 @@
-<div class="card">
-  <div class="header">
-    <h4 class="title">{{ selectedCurrency }}</h4>
-  </div>
-  <div class="content">
-    <div class="ct-chart"></div>
-    <div class="footer">
-      <div class="legend">
-        <span *ngFor="let item of legendItems">
-          <i class="fa fa-circle {{ item }}"></i> {{ item }}
-        </span>
-      </div>
-      <hr>
-      <div class="stats">
-        <a href="" onclick="return false;"><i (click)="updateAllCryptos()" class="fa fa-history"></i></a> Last Updated: {{ lastUpdated }}
-      </div>
+<div class="content">
+  <div class="ct-chart"></div>
+  <div class="footer">
+    <div class="legend">
+      <span *ngFor="let item of legendItems">
+        <i class="fa fa-circle {{ item }}"></i> {{ item }}
+      </span>
+    </div>
+    <hr>
+    <div class="stats">
+      <a href="" onclick="return false;"><i (click)="updateAllCryptos()" class="fa fa-history"></i></a> Last Updated: {{ lastUpdated }}
     </div>
   </div>
 </div>
