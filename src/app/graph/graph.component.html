@@ -3,7 +3,8 @@
   <div class="footer">
     <div class="legend">
       <span *ngFor="let item of legendItems">
-        <i class="fa fa-circle {{ item }}"></i> {{ item }}
+        <a href="" onclick="return false;" (click)="hideItem(item)">
+          <i class="fa fa-circle {{ item }}"></i></a> {{ item }}
       </span>
     </div>
     <hr>

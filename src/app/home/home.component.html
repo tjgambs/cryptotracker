@@ -5,7 +5,7 @@
 
               <div class="card">
                 <div style="width: 100px; padding-left: 10px; padding-top: 10px;">
-                  <select class="form-control" [(ngModel)]="selectedCurrency" (ngModelChange)="changeCurrency()">
+                  <select class="form-control" [(ngModel)]="selectedCurrency">
                     <option *ngFor="let c of currencies" [ngValue]="c"> {{c}} </option>
                   </select>
                 </div>

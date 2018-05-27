@@ -38,6 +38,7 @@ export interface Bar {
 export class GraphComponent implements OnInit {
 
     private series: any[] = [[],[],[],[],[]];
+    private seriesVisible: boolean[] = [true, true, true, true, true, true];
     private status: number = 0;
     private legendItems: string[] = ['GDAX', 'Bitfinex', 'Binance','Bitstamp', 'Gemini', 'Poloniex'];
     private chart: Chartist.Line;
@@ -77,22 +78,38 @@ export class GraphComponent implements OnInit {
         }, 1000 * 60);
     }
 
+    private toggle(name, index) {
+        if (this.seriesVisible[index] == false) {
+            this.addCrypto(this.selectedCurrency, name, index, false);
+        } else {
+            this.series[index] = {name: name, data: []};
+            this.chart.update({
+                series: this.series
+            });
+        }
+        this.seriesVisible[index] = !this.seriesVisible[index];
+    }
+
+    private hideItem(item) {
+        this.toggle(item, this.legendItems.indexOf(item));
+    }
+
     private updateAllCryptos() {
-        this.addCrypto(this.selectedCurrency, 'gdax', 0);
-        this.addCrypto(this.selectedCurrency, 'bitfinex', 1);
-        this.addCrypto(this.selectedCurrency, 'binance', 2);
-        this.addCrypto(this.selectedCurrency, 'bitstamp', 3);
+        this.addCrypto(this.selectedCurrency, 'gdax', 0, true);
+        this.addCrypto(this.selectedCurrency, 'bitfinex', 1, true);
+        this.addCrypto(this.selectedCurrency, 'binance', 2, true);
+        this.addCrypto(this.selectedCurrency, 'bitstamp', 3, true);
         if (this.selectedCurrency != 'LTCUSD') {
-            this.addCrypto(this.selectedCurrency, 'gemini', 4);
+            this.addCrypto(this.selectedCurrency, 'gemini', 4, true);
         } else {
             this.series[4] = {name: 'gemini', data: []};
         }
-        this.addCrypto(this.selectedCurrency, 'poloniex', 5);
+        this.addCrypto(this.selectedCurrency, 'poloniex', 5, true);
         this.lastUpdated = moment().format('h:mm:ss a');
         this.cdRef.detectChanges();
     }
 
-    private addCrypto(currency, exchange, index) {
+    private addCrypto(currency, exchange, index, flag) {
         let t = this;
         this.getPastDayBars(currency, exchange, 1).subscribe(bars => {
             let data = [];
@@ -103,7 +120,13 @@ export class GraphComponent implements OnInit {
                 name: exchange,
                 data: data
             };
-            t.status = t.status + 1;
+            if (flag) {
+                t.status = t.status + 1;
+            } else {
+                t.chart.update({
+                    series: t.series
+                });
+            }
             if ((currency != 'LTCUSD' && t.status == 6) || (currency == 'LTCUSD' && t.status == 5)) {
                 t.chart.update({
                     series: t.series
