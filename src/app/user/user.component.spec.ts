@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { UserComponent } from './user.component';
+import {AuthService} from '../auth/auth.service';
+import {Router} from '@angular/router';
 
 describe('UserComponent', () => {
     let component: UserComponent;
@@ -11,7 +13,7 @@ describe('UserComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ UserComponent ]
+            declarations: [ UserComponent ],
         })
         .compileComponents();
     }));
@@ -20,9 +22,5 @@ describe('UserComponent', () => {
         fixture = TestBed.createComponent(UserComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
     });
 });
