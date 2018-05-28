@@ -42,7 +42,7 @@ export class GraphComponent implements OnInit {
     private series: any[] = [[],[],[],[],[]];
     private seriesVisible: boolean[] = [true, true, true, true, true, true];
     private status: number = 0;
-    private legendItems: string[] = ['GDAX', 'Bitfinex', 'Binance','Bitstamp', 'Gemini', 'Poloniex'];
+    public legendItems: string[] = ['GDAX', 'Bitfinex', 'Binance','Bitstamp', 'Gemini', 'Poloniex'];
     private chart: Chartist.Line;
 
     @Input()
@@ -99,7 +99,7 @@ export class GraphComponent implements OnInit {
         this.toggle(item, this.legendItems.indexOf(item));
     }
 
-    private updateAllCryptos() {
+    public updateAllCryptos() {
         this.status = 0;
         this.addCrypto(this.selectedCurrency, 'gdax', 0, true);
         this.addCrypto(this.selectedCurrency, 'bitfinex', 1, true);

@@ -14,7 +14,7 @@ export class TickerComponent implements OnInit {
     public currency: string;
 
     @Input()
-    private quotes: any;
+    public quotes: any;
 
     constructor() {
 
